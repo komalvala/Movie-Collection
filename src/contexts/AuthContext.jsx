@@ -5,7 +5,9 @@ import {
   signOut, 
   onAuthStateChanged,
   updateProfile,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  GoogleAuthProvider,
+  signInWithPopup
 } from 'firebase/auth';
 import { auth } from '../config/firebaseConfig';
 
@@ -46,6 +48,12 @@ export function AuthProvider({ children }) {
   function resetPassword(email) {
     return sendPasswordResetEmail(auth, email);
   }
+  
+  // Google sign in
+  function signInWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(auth, provider);
+  }
 
   // Set up auth state listener
   useEffect(() => {
@@ -63,7 +71,8 @@ export function AuthProvider({ children }) {
     login,
     logout,
     resetPassword,
-    updateUserProfile
+    updateUserProfile,
+    signInWithGoogle
   };
 
   return (

@@ -6,6 +6,7 @@ import {
   updateMovieAsync,
 } from "../Services/Actions/MovieAction";
 import { useNavigate, useParams } from "react-router";
+import ImageUpload from "./ImageUpload";
 
 const EditMovie = () => {
   const { id } = useParams();
@@ -35,6 +36,13 @@ const EditMovie = () => {
     setInputForm((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  };
+  
+  const handleImageUpload = (imageUrl) => {
+    setInputForm((prev) => ({
+      ...prev,
+      image: imageUrl,
     }));
   };
 
@@ -139,17 +147,11 @@ const EditMovie = () => {
                 </Form.Group>
               </Col>
               <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Image URL</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="image"
-                    value={inputForm.image}
-                    onChange={handleChanged}
-                    placeholder="Poster image URL"
-                  />
-                  {errors.image && <div className="text-danger">{errors.image}</div>}
-                </Form.Group>
+                <ImageUpload 
+                  onImageUpload={handleImageUpload} 
+                  currentImage={inputForm.image} 
+                />
+                {errors.image && <div className="text-danger">{errors.image}</div>}
               </Col>
             </Row>
 

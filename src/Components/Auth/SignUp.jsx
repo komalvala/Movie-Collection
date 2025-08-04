@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Card, Alert, Container } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
+import { FcGoogle } from 'react-icons/fc';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -10,7 +11,7 @@ const SignUp = () => {
   const [displayName, setDisplayName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signup, updateUserProfile } = useAuth();
+  const { signup, updateUserProfile, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
@@ -41,6 +42,23 @@ const SignUp = () => {
     } catch (error) {
       console.error('Signup error:', error);
       setError('Failed to create an account: ' + (error.message || 'Unknown error'));
+    } finally {
+      setLoading(false);
+    }
+  }
+  
+  async function handleGoogleSignIn() {
+    try {
+      setError('');
+      setLoading(true);
+      console.log('Attempting to sign up with Google');
+      
+      await signInWithGoogle();
+      console.log('Google signup successful');
+      navigate('/');
+    } catch (error) {
+      console.error('Google signup error:', error);
+      setError('Failed to sign up with Google: ' + (error.message || 'Unknown error'));
     } finally {
       setLoading(false);
     }
@@ -91,9 +109,25 @@ const SignUp = () => {
                 />
               </Form.Group>
               <Button disabled={loading} className="w-100 mt-2" type="submit" variant="danger">
-                Sign Up
+                Sign Up with Email
               </Button>
             </Form>
+            
+            <div className="d-flex align-items-center my-3">
+              <div className="flex-grow-1 border-bottom"></div>
+              <div className="mx-3 text-muted">OR</div>
+              <div className="flex-grow-1 border-bottom"></div>
+            </div>
+            
+            <Button 
+              variant="outline-secondary" 
+              className="w-100 d-flex align-items-center justify-content-center gap-2"
+              onClick={handleGoogleSignIn}
+              disabled={loading}
+            >
+              <FcGoogle size={20} />
+              <span>Continue with Google</span>
+            </Button>
           </Card.Body>
         </Card>
         <div className="w-100 text-center mt-2">

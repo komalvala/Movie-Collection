@@ -9,7 +9,6 @@ import Footer from './Components/Footer';
 import NewSection from './Components/NewSection';
 import TrendingGenres from './Components/TrendingGenres';
 import Testimonials from './Components/Testimonials';
-
 // Auth Components
 import { AuthProvider } from './contexts/AuthContext';
 import Login from './Components/Auth/Login';

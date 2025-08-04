@@ -10,22 +10,16 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import {
-  deleteMoviesAsync,
   getAllMoviesAsync,
 } from "../Services/Actions/MovieAction";
-import { FaEdit, FaEye, FaRegTrashAlt } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 
 const Home = () => {
   const { movies, isLoading, errMSG } = useSelector((state) => state.movieReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleEdit = (id) => {
-    navigate(`/edit-movie/${id}`);
-  };
-  const handleDelete = (id) => {
-    dispatch(deleteMoviesAsync(id));
-  };
+  // View movie details
   const handleView = (id) => {
     navigate(`/single-movie/${id}`);
   };
@@ -92,25 +86,12 @@ const Home = () => {
                       )}
                       <div className="movie-actions">
                         <Button
-                          variant="outline-primary"
-                          size="sm"
-                          onClick={() => handleEdit(movie.id)}
-                        >
-                          <FaEdit />Edit
-                        </Button>
-                        <Button
                           variant="outline-info"
                           size="sm"
                           onClick={() => handleView(movie.id)}
+                          className="w-100"
                         >
-                          <FaEye /> View
-                        </Button>
-                        <Button
-                          variant="outline-danger"
-                          size="sm"
-                          onClick={() => handleDelete(movie.id)}
-                        >
-                          <FaRegTrashAlt />Delete
+                          <FaEye /> View Details
                         </Button>
                       </div>
                     </div>

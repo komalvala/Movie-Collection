@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Form, Button, Card, Alert, Container } from 'react-bootstrap';
+import { Form, Button, Card, Alert, Container, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
+import { FcGoogle } from 'react-icons/fc';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
@@ -25,6 +26,23 @@ const Login = () => {
     } catch (error) {
       console.error('Login error:', error);
       setError('Failed to log in: ' + (error.message || 'Unknown error'));
+    } finally {
+      setLoading(false);
+    }
+  }
+  
+  async function handleGoogleSignIn() {
+    try {
+      setError('');
+      setLoading(true);
+      console.log('Attempting to log in with Google');
+      
+      await signInWithGoogle();
+      console.log('Google login successful');
+      navigate('/');
+    } catch (error) {
+      console.error('Google login error:', error);
+      setError('Failed to log in with Google: ' + (error.message || 'Unknown error'));
     } finally {
       setLoading(false);
     }
@@ -57,9 +75,26 @@ const Login = () => {
                 />
               </Form.Group>
               <Button disabled={loading} className="w-100 mt-2" type="submit" variant="danger">
-                Log In
+                Log In with Email
               </Button>
             </Form>
+            
+            <div className="d-flex align-items-center my-3">
+              <div className="flex-grow-1 border-bottom"></div>
+              <div className="mx-3 text-muted">OR</div>
+              <div className="flex-grow-1 border-bottom"></div>
+            </div>
+            
+            <Button 
+              variant="outline-secondary" 
+              className="w-100 d-flex align-items-center justify-content-center gap-2"
+              onClick={handleGoogleSignIn}
+              disabled={loading}
+            >
+              <FcGoogle size={20} />
+              <span>Continue with Google</span>
+            </Button>
+            
             <div className="w-100 text-center mt-3">
               <Link to="/forgot-password">Forgot Password?</Link>
             </div>

@@ -1,12 +1,46 @@
-# React + Vite
+# Movie Project - React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a movie booking application built with React and Vite, featuring Firebase authentication and Cloudinary image uploads.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- User authentication (email/password and Google login)
+- Movie management (add, edit, delete)
+- Image uploads with Cloudinary
+- Movie booking system
 
-## Expanding the ESLint configuration
+## Cloudinary Image Upload Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1. Environment Setup
+
+Cloudinary is already configured with cloud name 'dheweokqn'. If you want to use your own Cloudinary account:
+
+1. Create a Cloudinary account at [cloudinary.com](https://cloudinary.com/)
+2. Get your Cloud Name from the dashboard
+3. Edit the `.env` file in the project root and add your cloud name:
+
+```
+VITE_CLOUDINARY_CLOUD_NAME=your_cloud_name_here
+```
+
+### 2. Create Upload Preset
+
+Make sure you have an upload preset named `movie_uploads` in your Cloudinary dashboard:
+
+1. In your Cloudinary dashboard, go to Settings > Upload
+2. Scroll down to "Upload presets" and click "Add upload preset"
+3. Create a new preset with these settings:
+   - Preset name: `movie_uploads`
+   - Signing Mode: Unsigned
+   - Folder: Optional (e.g., "movie-posters")
+4. Save the preset
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
