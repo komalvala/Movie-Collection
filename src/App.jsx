@@ -10,17 +10,41 @@ import NewSection from './Components/NewSection';
 import TrendingGenres from './Components/TrendingGenres';
 import Testimonials from './Components/Testimonials';
 
+// Auth Components
+import { AuthProvider } from './contexts/AuthContext';
+import Login from './Components/Auth/Login';
+import SignUp from './Components/Auth/SignUp';
+import ForgotPassword from './Components/Auth/ForgotPassword';
+import Profile from './Components/Auth/Profile';
+import PrivateRoute from './Components/Auth/PrivateRoute';
+
 function App() {
   const location = useLocation(); 
 
   return (
-    <>
+    <AuthProvider>
       <Header />
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/add-movie" element={<AddMovie />} />
-        <Route path="/edit-movie/:id" element={<EditMovie />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/profile" element={
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        } />
+        <Route path="/add-movie" element={
+          <PrivateRoute>
+            <AddMovie />
+          </PrivateRoute>
+        } />
+        <Route path="/edit-movie/:id" element={
+          <PrivateRoute>
+            <EditMovie />
+          </PrivateRoute>
+        } />
         <Route path="/single-movie/:id" element={<SingleMovie />} />
       </Routes>
 
@@ -33,7 +57,7 @@ function App() {
       )}
 
       <Footer />
-    </>
+    </AuthProvider>
   );
 }
 

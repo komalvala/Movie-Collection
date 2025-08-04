@@ -1,10 +1,14 @@
-import { Container } from "react-bootstrap";
+import { Container, Button, Dropdown } from "react-bootstrap";
 import { IoIosSearch } from "react-icons/io";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpg"; 
 import "./Header.css";
+import { useAuth } from "../contexts/AuthContext";
+import { FaUserCircle } from "react-icons/fa";
 
 function Header() {
+  const { currentUser, logout } = useAuth();
+  
   return (
     <>
       <header className="bookmyshow-header">
@@ -24,7 +28,24 @@ function Header() {
 
           <div className="d-flex align-items-center gap-3">
             <span>Surat ▾</span>
-            <Link to="/add-movie" className="menu-link">Add Movie</Link>
+            
+            {currentUser ? (
+              <Dropdown>
+                <Dropdown.Toggle variant="link" id="dropdown-basic" className="user-dropdown">
+                  <FaUserCircle className="user-icon" />
+                  {currentUser.displayName || currentUser.email.split('@')[0]}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item as={Link} to="/profile">Profile</Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/add-movie">Add Movie</Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            ) : (
+              <Link to="/login" className="menu-link">Login / Sign Up</Link>
+            )}
           </div>
         </Container>
       </header>

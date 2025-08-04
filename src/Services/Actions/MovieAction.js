@@ -1,6 +1,5 @@
-import axios from "axios"
 import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore"
-import { db } from "../../../config/firebaseConfig"
+import { db } from "../../config/firebaseConfig"
 
 export const addMovie = () => {
     return {
