@@ -25,12 +25,12 @@ VITE_CLOUDINARY_CLOUD_NAME=your_cloud_name_here
 
 ### 2. Create Upload Preset
 
-Make sure you have an upload preset named `movie_uploads` in your Cloudinary dashboard:
+Make sure you have an upload preset named `wjaninbj` in your Cloudinary dashboard:
 
 1. In your Cloudinary dashboard, go to Settings > Upload
 2. Scroll down to "Upload presets" and click "Add upload preset"
 3. Create a new preset with these settings:
-   - Preset name: `movie_uploads`
+   - Preset name: `wjaninbj`
    - Signing Mode: Unsigned
    - Folder: Optional (e.g., "movie-posters")
 4. Save the preset
